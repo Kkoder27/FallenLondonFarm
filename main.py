@@ -8,9 +8,15 @@ from selenium.webdriver.common.action_chains import ActionChains
 userEmail = 'flautofarmer+testcase0@gmail.com'
 userPassword = 'c4$_SmcYwzPsuRH'
 
+#VARIABLES
+currentArea = 'Where I am'
+currentActions = 'Spoons I have'
+travelButton = 'Use me to access map'
+accessMolochStreet = 'variable used for moloch st access later'
+
 driver = webdriver.Chrome()
 driver.get('https://www.fallenlondon.com/') #Opens Chrome and Directs to Fallenlondon
-
+driver.fullscreen_window()
 
 #this block enters Username/Password and enters login
 emailField = driver.find_element(By.ID, 'emailAddress')
@@ -19,8 +25,37 @@ loginButtonFL = driver.find_element(By.CSS_SELECTOR, 'button.button--primary')
 emailField.send_keys(userEmail)
 passwordField.send_keys(userPassword)
 ActionChains(driver).click(loginButtonFL).perform()
+time.sleep(3)
 
 
+ #FUNCTIONS
+def getCurrentArea():
+    global currentArea 
+    currentArea = driver.find_element(By.CSS_SELECTOR, 'p.welcome__current-area').text.replace(',', '')
+    return 
+def getCurrentActions():
+    global currentActions 
+    currentActions = driver.find_element(By.XPATH, '//*[@id="root"]/div/div[2]/div[4]/div[1]/div/div[1]/ul[1]/li[1]/div[2]/div/div/span/div[1]').text
+    return
+def getTravelButton():
+    global travelButton
+    travelButton = driver.find_element(By.XPATH, '//*[@id="root"]/div/div[2]/div[4]/div[1]/div/div[3]/div/div/button')
+    return
+def getMolochStreet():
+    global accessMolochStreet
+    accessMolochStreet = driver.find_element(By.XPATH, '')
+    return
+#xpath copy/pasted. POTENTIAL BREAKPOINT!!!
 
-time.sleep(15)
+getCurrentActions()
+getCurrentArea()
+
+if currentArea != 'Moloch Street':
+    getTravelButton()
+    ActionChains(driver).click(travelButton).perform()
+    time.sleep(2)
+    getMolochStreet()
+    ActionChains(driver).click(accessMolochStreet).perform()
+
+time.sleep(5)
 driver.close() #close window
