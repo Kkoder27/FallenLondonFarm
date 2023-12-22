@@ -11,8 +11,11 @@ userPassword = 'c4$_SmcYwzPsuRH'
 #VARIABLES
 currentArea = 'Where I am'
 currentActions = 'Spoons I have'
-travelButton = 'Use me to access map'
-accessMolochStreet = 'variable used for moloch st access later'
+
+#INACTIVE/UNUSED VARIABLES
+travelButton = 'Use me to access map' 
+accessLadybonesDistrict = 'variable used to open ladybones district' 
+accessMolochStreet = 'variable used for moloch st access later' 
 
 driver = webdriver.Chrome()
 driver.get('https://www.fallenlondon.com/') #Opens Chrome and Directs to Fallenlondon
@@ -37,25 +40,47 @@ def getCurrentActions():
     global currentActions 
     currentActions = driver.find_element(By.XPATH, '//*[@id="root"]/div/div[2]/div[4]/div[1]/div/div[1]/ul[1]/li[1]/div[2]/div/div/span/div[1]').text
     return
-def getTravelButton():
+
+#INACTIVE/UNUSED FUNCTIONS
+def getTravelButton(): 
     global travelButton
     travelButton = driver.find_element(By.XPATH, '//*[@id="root"]/div/div[2]/div[4]/div[1]/div/div[3]/div/div/button')
     return
-def getMolochStreet():
+def getLadybonesDistrict():
+    global accessLadybonesDistrict
+    accessLadybonesDistrict = driver.find_element(By.XPATH, '/html/body/div[11]/div/div/div[1]/div[1]/div[5]/div[2]/div/div/div')
+    return
+def getMolochStreet(): 
     global accessMolochStreet
-    accessMolochStreet = driver.find_element(By.XPATH, '')
+    accessMolochStreet = driver.find_element(By.XPATH, '/html/body/div[11]/div/div/div[1]/div[1]/div[5]/div[15]/div/div/div')
     return
 #xpath copy/pasted. POTENTIAL BREAKPOINT!!!
+
+#PENDING VARIABLE APPLICATION
+# if currentArea != 'Moloch Street':
+#     getTravelButton()
+#     ActionChains(driver).click(travelButton).perform()
+#     time.sleep(2)
+#     getLadybonesDistrict()
+#     ActionChains(driver).click(accessLadybonesDistrict).perform
+#     time.sleep(2)
+#     getMolochStreet()
+#     ActionChains(driver).click(accessMolochStreet).perform()
 
 getCurrentActions()
 getCurrentArea()
 
-if currentArea != 'Moloch Street':
-    getTravelButton()
-    ActionChains(driver).click(travelButton).perform()
-    time.sleep(2)
-    getMolochStreet()
-    ActionChains(driver).click(accessMolochStreet).perform()
+match currentArea:
+    case 'Moloch Street':
+        pass
+    case 'Spite':
+        pass
+    case 'The University':
+        pass
+    case 'The Singing Mandrake':
+        pass
+    case 'The Blind Helmsman':
+        pass
 
 time.sleep(5)
 driver.close() #close window
